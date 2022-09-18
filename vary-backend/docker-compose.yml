@@ -1,0 +1,20 @@
+services:
+  vary-backend:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - 8070:8080
+    depends_on:
+      - vary-db
+  vary-db:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - 5727:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: androiddb
+    volumes:
+      - /usr/vary_db/postgresql:/var/lib/postgresql

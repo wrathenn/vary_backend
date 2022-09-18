@@ -3,7 +3,7 @@ COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app/pom.xml
 WORKDIR /usr/src/app
 RUN mvn -T 1C package -Dmaven.test.skip=true
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
 
 # creates runtime
 FROM adoptopenjdk/openjdk11:alpine-jre

@@ -37,6 +37,7 @@ class PostgresEbeanServerFactory(
     fun createDbConfig(): Database {
         val config = DatabaseConfig().also {
             mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            it.addPackage("symtaxerror.vary.backend.entities")
             it.dataSource = DataSourceBuilder
                 .create()
                 .url(url)

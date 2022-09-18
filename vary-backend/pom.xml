@@ -15,7 +15,8 @@
     <description>backend</description>
     <properties>
         <java.version>11</java.version>
-        <kotlin.version>1.6.10</kotlin.version>
+        <kotlin.version>1.5.21</kotlin.version>
+        <ebean.version>12.9.2</ebean.version>
     </properties>
     <dependencies>
         <dependency>
@@ -99,18 +100,18 @@
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>ebean</artifactId>
-            <version>13.6.3</version>
+            <version>${ebean.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>ebean-querybean</artifactId>
-            <version>13.6.3</version>
+            <version>${ebean.version}</version>
         </dependency>
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>querybean-generator</artifactId>
-            <version>13.6.3</version>
+            <version>${ebean.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -130,15 +131,43 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>io.repaint.maven</groupId>
+                <artifactId>tiles-maven-plugin</artifactId>
+                <version>2.17</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <tiles>
+                        <tile>io.avaje.kapt:compile:1.1</tile>
+                        <tile>io.avaje.kapt:querybean-generator:1.1</tile>
+                        <tile>io.ebean.tile:enhancement:${ebean.version}</tile>
+                    </tiles>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
                     <compilerPlugins>
                         <plugin>spring</plugin>
+                        <plugin>jpa</plugin>
                     </compilerPlugins>
+                    <jvmTarget>11</jvmTarget>
                 </configuration>
                 <dependencies>
                     <dependency>
